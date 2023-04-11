@@ -2,6 +2,7 @@ package isika.cda24.Projet1.scene;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,45 +149,50 @@ public class SceneModif extends Scene {
         root.setPadding(new Insets(60));
         root.setSpacing(30);
         root.setStyle(("-fx-font-family: 'Arial'"));
+        
+        actionBtnValider(stagiaireAModifier, criteres, stage);
+        actionBtnAnnuler(stage, criteres);
+
     }
  
     /* ******************* IMPLEMENTATION DES METHODES ******************** 
 	 * Valider et Annuler */
-     
-//    private void actionBtnValider(StagiaireBinaire stagiaireAModifier, StagiaireBinaire criteres, Stage stage) {
-//        btnValider.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                try {
-//                    int anneeInt = 0;
-//
-//                    if(!txtAnnee.getText().trim().equals("")) {
-//                        try {
-//                            anneeInt = Integer.parseInt(txtAnnee.getText().trim());
-//                        } catch (NumberFormatException e) {
-//                            txtAnnee.clear();
-//                        }
-//                    }
-//
-//                    StagiaireBinaire stagiaireAJour = new StagiaireBinaire(txtNom.getText(), txtPrenom.getText(),
-//                            txtDepartement.getText(), txtPromo.getText(), txtAnnee.getText());
-//
-//                    arbre.modification(stagiaireAModifier, stagiaireAJour);
-//
-//                    List<StagiaireBinaire> listeDeStagiaire = new ArrayList<>();
-//                    arbre.rechercheAvancee(listeDeStagiaire, criteres);
-//
-//                    TableViewStagiaires tableStagiaireScene = new TableViewStagiaires(stage, listeDeStagiaire, criteres, true);
-//                    tableStagiaireScene.getStylesheets().add("style.css");
-//                    stage.setScene(tableStagiaireScene);
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        });
-//    }
+    
+    
+    private void actionBtnValider(StagiaireBinaire stagiaireAModifier, StagiaireBinaire criteres, Stage stage) {
+        btnValider.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    int anneeInt = 0;
+
+                    if(!txtAnnee.getText().trim().equals("")) {
+                        try {
+                            anneeInt = Integer.parseInt(txtAnnee.getText().trim());
+                        } catch (NumberFormatException e) {
+                            txtAnnee.clear();
+                        }
+                    }
+
+                    StagiaireBinaire stagiaireAJour = new StagiaireBinaire(txtNom.getText(), txtPrenom.getText(),
+                            txtDepartement.getText(), txtPromo.getText(), txtAnnee.getText());
+                  
+                    RandomAccessFile raf = new RandomAccessFile("STAGIAIRES.DON", "rw");                    
+                    arbre.modifierStagiaire(stagiaireAModifier.getNom(), stagiaireAJour, raf);
+
+                    List<StagiaireBinaire> listeDeStagiaire = new ArrayList<>();
+                    
+                    TableViewStagiaires tableStagiaireScene = new TableViewStagiaires(stage, listeDeStagiaire, criteres, true);
+                    tableStagiaireScene.getStylesheets().add("style.css");
+                    stage.setScene(tableStagiaireScene);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
 
     private void actionBtnAnnuler(Stage stage, StagiaireBinaire criteres) {
         btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
