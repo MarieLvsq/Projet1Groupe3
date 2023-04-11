@@ -1,0 +1,80 @@
+
+//test afficher arbre infixe//
+ List<StagiaireBinaire> cleList = arbre.affichageInfixeNoeud();
+			    for (StagiaireBinaire cle : cleList) {
+			        System.out.println(cle);
+			    }
+
+
+//Test method "rechercheStagiaire" (works with doublons too!)//
+
+	List<StagiaireBinaire> stagiaires = StagiaireBinaire.readStagiairesFromResource("STAGIAIRES.DON");
+	String filename = "Stagiaires.bin";
+    		try (RandomAccessFile raf = new RandomAccessFile(filename, "rw")) {
+
+    		ArbreBinaire arbre = new ArbreBinaire();
+            			for (StagiaireBinaire stagiaire : stagiaires) {
+            				arbre.ajouterNoeud(stagiaire);
+            			}
+            				
+arbre.rechercheStagiaire("GARIJO");
+if (cleList.isEmpty()) {
+System.out.println("Le nom n'existe pas.");
+} else {
+	for (StagiaireBinaire s : cleList) {
+		if (s.getNom().replace(" ", "").equals("GARIJO")) {
+		if (s.getNom().replace(" ", "").equals("GARIJO")) {
+		System.out.println("Stagiaire trouvé: ");
+		System.out.println("Nom: " + s.getNom().replace(" ", ""));
+		System.out.println("Prénom: " + s.getPrenom().replace(" ", ""));
+		System.out.println("Département: " + s.getDepartement().replace(" ", ""));
+		System.out.println("Promo : " + s.getPromo().replace(" ", ""));
+		System.out.println("Annee : " + s.getAnnee().replace(" ", ""));
+						}
+
+					}
+
+				}
+			}
+                        				raf.close();
+
+                        			}
+
+                        		} catch (IOException e) {
+                        			e.printStackTrace();
+                        		}
+                        	}
+                        }
+
+
+// Méthode créer fichier binaire //
+File rep = new File("src/main/resources");
+		// crée physiquement un repertoire à partir de l'objet sur l'ordinateur
+		boolean caAmarche = rep.mkdir();
+		// crée un objet File qui est destiné à un autre fichier
+		File monFichier = new File("src/main/resources/Stagiaires.bin");
+
+		try {
+			// crée le fichier physiquement sur l'ordinateur
+			monFichier.createNewFile();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+// Méthode EffacerFichier //
+try {
+			StagiaireBinaire.effacerFichier("Stagiaires.bin");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+ // Méthode Recherche Avancée - cherche et affiche un stagiaire quand on appelle un seul paramètre du StagiaireBinaire //
+		    StagiaireBinaire recherche = new StagiaireBinaire("", "Alix", "", "", "");
+		    // Call the "rechercheAvancee" method and pass in the List and search criteria
+		    List<StagiaireBinaire> resultList = StagiaireBinaire.rechercheAvancee(stagiaires, recherche);
+		    // Loop through the resultList and print out the matching objects
+		    for (StagiaireBinaire s : resultList) {
+		        System.out.println(s.getNom() + " " + s.getPrenom() + " " + s.getDepartement() + " " + s.getPromo() + " " + s.getAnnee());
+		    }
